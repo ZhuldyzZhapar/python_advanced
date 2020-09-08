@@ -7,6 +7,7 @@ board = list("*" * len(the_word))
 while not game_over:
     print("")
     print("------------------------------")
+    print(f"Current score: 40 points")
     print(f"Guess a word: {' '.join(board)}")
     print(f"Hint: {hint}")
     user_guess = input("Enter a word or a letter: ")
@@ -28,3 +29,5 @@ while not game_over:
 # Have a list of words, and randomly pick a word from a list
 
 # Two players game. Player one's turn. Guess the word.
+# https://github.com/timurbakibayev/python_advanced
+
