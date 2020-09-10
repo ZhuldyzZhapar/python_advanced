@@ -23,3 +23,12 @@ def decode(encoded_text):
 # print(encoded/decoded text)#
 
 # Hello, world! -> Itffk, dksfo!
+# git stash
+
+# Encode/decode Cyrillic letters
+# Ghbdtn vbh => Привет мир
+# Руддщ цщкдв => Hello world
+
+# Optional:
+# Привет мир - Privet mir
+# Я робот - Ya robot
