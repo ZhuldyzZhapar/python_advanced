@@ -31,4 +31,4 @@ def decode(encoded_text):
 
 # Optional:
 # Привет мир - Privet mir
-# Я робот - Ya robot
+# Я робот -  Ya robot
