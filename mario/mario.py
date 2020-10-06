@@ -7,6 +7,11 @@ clock = pygame.time.Clock()
 
 block_size = 50
 
+pygame.font.init() # you have to call this at the start,
+                   # if you want to use this module.
+myfont = pygame.font.SysFont('Comic Sans MS', 70)
+game_over_text = myfont.render("Game over!", False, (255, 0, 0))
+
 # Load images
 cloud = pygame.image.load("cloud.png")
 block = pygame.image.load("mario_block.png")
@@ -43,6 +48,7 @@ gravity = 1  # vertical acceleration
 jump_is_allowed = False
 look_left = False
 camera_x = 0
+game_over = False
 
 # Game loop
 done = False
@@ -75,6 +81,9 @@ while not done:
         if dy > 0:
             jump_is_allowed = True
         dy = 0
+
+    if y > size[1]:
+        game_over = True
 
     # change x
     x = x + dx
@@ -135,6 +144,9 @@ while not done:
         screen.blit(mario_left, (x + camera_x, y))
     else:
         screen.blit(mario_right, (x + camera_x, y))
+
+    if game_over:
+        screen.blit(game_over_text, (50, 50))
 
     pygame.display.flip()
     clock.tick(fps)
