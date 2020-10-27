@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Papers</title>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+    <p><b>Hello, {{ username }}!</b></p>
+    <p><b>You are from company {{ company }}.</b></p>
+    {% if company == 'Microsoft' %}
+       <h3>WOW!</h3>
+       <h3>You are from Microsoft!!!</h3>
+    {% endif %}
+
+    {{ extra|safe }}
+
+    <div style="display: flex; flex-direction: column; margin: 3em; background-color: aliceblue; width: 300px; padding: 1em">
+        {% if cars %}
+            {% for car in cars %}
+                <div style="display: flex; flex-direction: row">
+                    <div class="car_element" style="
+                            flex: 0.7;
+                            margin: 5px;
+                            padding: 5px;
+                            background-color: {{ car.color }};">
+                        <a href="/cars/{{ car.id }}">
+                            {{ car.color }} {{ car.name }}
+                        </a>
+                    </div>
+                    <div style="flex: 0.3; margin: 5px;
+                            padding: 5px;
+                            background-color: {{ car.color }};">
+                        <a href="/cars/{{ car.id }}/delete">DELETE</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            There are no cars left :(
+        {% endif %}
+    </div>
+
+    <div><a href="/">Go back</a></div>
+    <div><a href="/restore">Restore cars</a></div>
+
+
+</body>
+</html>
