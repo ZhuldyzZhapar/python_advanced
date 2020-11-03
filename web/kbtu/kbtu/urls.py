@@ -23,6 +23,7 @@ urlpatterns = [
     path('cars/<int:id>', views.car_view),
     path('cars/<int:id>/delete', views.car_delete),
     path('cars/', views.cars_view),
-    path('restore/', views.cars_restore),
+    path('add_random/', views.cars_add_random),
+    path('add/', views.cars_add),
     path('', views.index),
 ]
