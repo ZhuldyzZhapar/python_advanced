@@ -1,0 +1,10 @@
+.car_element{
+    flex: 0.7;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+body {
+    padding: 1em;
+}

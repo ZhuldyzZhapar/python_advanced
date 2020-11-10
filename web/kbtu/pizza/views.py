@@ -5,7 +5,16 @@ import random
 
 def index(request):
     # context = {}
-    return render(request, 'index.html')
+    return render(request, 'index_boot.html')
+
+def login(request):
+    # context = {}
+    return render(request, 'login.html')
+
+
+def tables(request):
+    context = {"cars": Car.objects.all()}
+    return render(request, 'tables.html', context)
 
 
 def papers(request):

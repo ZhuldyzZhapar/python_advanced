@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from pizza import views
+from django.conf.urls.static import static
+from kbtu import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +27,9 @@ urlpatterns = [
     path('cars/', views.cars_view),
     path('add_random/', views.cars_add_random),
     path('add/', views.cars_add),
+    path('login.html', views.login),
+    path('tables.html', views.tables),
     path('', views.index),
-]
+    path('index.html', views.index),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
