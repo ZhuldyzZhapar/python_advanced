@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from pizza import views
+from pizza import api_views
 from django.conf.urls.static import static
 from kbtu import settings
 
@@ -31,5 +32,7 @@ urlpatterns = [
     path('tables.html', views.tables),
     path('', views.index),
     path('index.html', views.index),
+    path('api/numbers', api_views.numbers),
+    path('api/cars', api_views.cars),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

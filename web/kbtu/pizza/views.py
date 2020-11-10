@@ -3,9 +3,16 @@ from pizza.models import Car
 from pizza.models import Color
 import random
 
+
 def index(request):
-    # context = {}
-    return render(request, 'index_boot.html')
+    all_cars = Car.objects.count()
+    blue_cars = Car.objects.filter(color__name="blue").count()
+
+    our_stats = [500, 400, 300, 400, 500, 700,
+                 800, 900, 900, 1000, 1100, 1200]
+
+    context = {"blue_cars": int(blue_cars/all_cars*100),"stats": our_stats}
+    return render(request, 'index_boot.html', context)
 
 def login(request):
     # context = {}
