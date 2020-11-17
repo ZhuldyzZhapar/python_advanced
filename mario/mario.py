@@ -17,10 +17,14 @@ cloud = pygame.image.load("cloud.png")
 block = pygame.image.load("mario_block.png")
 mario_left = pygame.image.load("mario_left.png")
 mario_right = pygame.image.load("mario_right.png")
+background_img = pygame.image.load("game_background.png")
+background_img = pygame.transform.scale(background_img, size)
 cloud = pygame.transform.scale(cloud, (block_size,block_size))
 block = pygame.transform.scale(block, (block_size,block_size))
 mario_left = pygame.transform.scale(mario_left, (block_size,block_size))
 mario_right = pygame.transform.scale(mario_right, (block_size,block_size))
+enemy_img = pygame.image.load("enemy.png")
+enemy_img = pygame.transform.scale(enemy_img, (block_size,block_size))
 
 # Level!
 map = [
@@ -32,10 +36,10 @@ map = [
     "                                                                                                                  ",
     "                                                       b                                                           ",
     "                      bb                        b      b                                                              ",
-    "                 bb                bbbbbbb     bb      b                                     ",
+    "            e    bb                bbbbbbb     bb      b                                     ",
     "         bbbbb                                bbb      b                                    ",
     "                          bbbbbbb           bbbbb      b                                         ",
-    "                                        bbbbbbbbb                                                                  ",
+    "                   b       e            bbbbbbbbb       e      b                                                    ",
     "bbbbbbbb bbbbb bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb                                                                                              ",
 ]
 
@@ -50,11 +54,27 @@ look_left = False
 camera_x = 0
 game_over = False
 
-# Game loop
-done = False
-while not done:
-    # Update game variables
 
+class Enemy():
+    x = 0
+    y = 0
+    dx = 3
+    dy = 0
+
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+
+
+enemies = []
+for i in range(len(map)):
+    for j in range(len(map[i])):
+        if map[i][j] == "e":
+            enemies.append(Enemy(j * block_size, i * block_size))
+
+
+def move(x,y,dx,dy, jump_is_allowed = True):
+    global map, camera_x
     # increase speed
     dy = dy + gravity
     if dy > 10:
@@ -71,7 +91,7 @@ while not done:
     for i in range(len(map)):
         for j in range(len(map[i])):
             if map[i][j] == "b":
-                rect2 = pygame.Rect(j*block_size, i*block_size, block_size, block_size)
+                rect2 = pygame.Rect(j * block_size, i * block_size, block_size, block_size)
                 if rect1.colliderect(rect2):
                     collide = True
 
@@ -81,9 +101,6 @@ while not done:
         if dy > 0:
             jump_is_allowed = True
         dy = 0
-
-    if y > size[1]:
-        game_over = True
 
     # change x
     x = x + dx
@@ -100,10 +117,30 @@ while not done:
     if collide:
         x = save_x
 
+    return x,y,dx,dy,jump_is_allowed,collide
+
+# Game loop
+done = False
+while not done:
+    # Update game variables
+
+    # increase speed
+    x,y,dx,dy,jump_is_allowed,collide = move(x,y,dx,dy, jump_is_allowed)
+
     if x + camera_x > size[0]*0.8:
         camera_x = camera_x - 10
     if x + camera_x < size[0]*0.2:
         camera_x = camera_x + 10
+
+
+    if y > size[1]:
+        game_over = True
+
+    for enemy in enemies:
+        enemy.x, enemy.y, enemy.dx, enemy.dy, _jump, collide = move(enemy.x, enemy.y, enemy.dx, enemy.dy, True)
+        if collide:
+            enemy.dx = -enemy.dx
+
 
     # Draw
     screen.fill((100, 100, 255))
@@ -133,17 +170,24 @@ while not done:
                 if dx > 0:
                     dx = 0
 
+    background_pos = (camera_x//3) % size[0]
+    screen.blit(background_img, (background_pos, 0))
+    screen.blit(background_img, (background_pos-size[0], 0))
+
     for i in range(len(map)):
         for j in range(len(map[i])):
             if map[i][j] == "b":
                 screen.blit(block, (j*block_size + camera_x, i*block_size))
             if map[i][j] == "c":
-                screen.blit(cloud, (j*block_size + camera_x, i*block_size))
+                screen.blit(cloud, (j*block_size + camera_x//2, i*block_size))
 
     if look_left:
         screen.blit(mario_left, (x + camera_x, y))
     else:
         screen.blit(mario_right, (x + camera_x, y))
+
+    for enemy in enemies:
+        screen.blit(enemy_img, (enemy.x + camera_x, enemy.y))
 
     if game_over:
         screen.blit(game_over_text, (50, 50))
