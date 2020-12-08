@@ -30,6 +30,7 @@ urlpatterns = [
     path('add/', views.cars_add),
     path('login.html', views.login),
     path('tables.html', views.tables),
+    path('cars_img.html', views.cars_img),
     path('', views.index),
     path('index.html', views.index),
     path('api/numbers', api_views.numbers),

@@ -30,11 +30,8 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <div id="navigation"></div>
-
         <!-- Sidebar -->
-        {% include "navigation.html" %}
-        <!-- End of Sidebar -->
+        {% include "navigation.html" %}        <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -263,30 +260,50 @@
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Color</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Color</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        {% for car in cars %}
-                                        <tr>
-                                            <td>{{ car.name }}</td>
-                                            <td>{{ car.color.name }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+
+                            <div style="display: flex; flex-direction: column">
+
+                                {% for car in cars %}
+                                        <div style="
+                                            display: flex;
+                                                flex-direction: row;
+                                                max-width: 640px;
+                                                border: solid;
+                                                border-radius: 10px;
+                                                box-shadow: aquamarine;
+                                                margin: 10px;
+                                                box-shadow: 0px 0px 50px grey;
+                                                    ">
+                                            <div style="display: flex; flex: 0.3;">
+                                                <div style="width: 120px; height: 120px; margin: 10px; border-radius: 10px;
+                                                    background-image: url('{{ car.img_url }}');
+                                                    background-position: center;
+                                                    background-size: cover;
+                                                    background-repeat: no-repeat;
+                                                    "></div>
+                                            </div>
+                                            <div style="display: flex; flex-direction: row; font-size: 50px; flex: 0.5;
+                                                    align-items: center; ">
+                                                <span>{{ car.name }}</span>
+                                            </div>
+                                            <div style="display: flex; flex-direction: row; font-size: 50px;flex: 0.1;
+                                                    align-items: center; padding-left: 40px">
+                                                <div style="
+
+                                                    background-color: {{ car.color.name }};
+                                                    width: 50px;
+                                                    height: 50px;
+                                                    border-radius: 50px;
+
+                                                "></div>
+                                            </div>
+<!--                                            <td>{{ car.color.name }}</td>-->
+                                        </div>
+                                {% endfor %}
+
+
                             </div>
+
                         </div>
                     </div>
 

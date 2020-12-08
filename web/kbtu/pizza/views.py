@@ -11,7 +11,7 @@ def index(request):
     our_stats = [500, 400, 300, 400, 500, 700,
                  800, 900, 900, 1000, 1100, 1200]
 
-    context = {"blue_cars": int(blue_cars/all_cars*100),"stats": our_stats}
+    context = {"blue_cars": int(blue_cars/all_cars*100),"stats": our_stats, "current_page": "dashboard"}
     return render(request, 'index_boot.html', context)
 
 def login(request):
@@ -20,8 +20,13 @@ def login(request):
 
 
 def tables(request):
-    context = {"cars": Car.objects.all()}
+    context = {"cars": Car.objects.all(), "current_page": "tables"}
     return render(request, 'tables.html', context)
+
+
+def cars_img(request):
+    context = {"cars": Car.objects.all(), "current_page": "images"}
+    return render(request, 'cars_img.html', context)
 
 
 def papers(request):
